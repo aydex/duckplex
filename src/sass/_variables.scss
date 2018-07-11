@@ -1,0 +1,73 @@
+$brand-color: #800000;
+
+$duckplex-colors: (
+    'primary':              #9E9E9E,
+    'accent':               #FF9800,
+    'divider':              #BDBDBD,
+    'foreground':           #F5F5F5,
+    'background':           #212121,
+    'primary-color-text':   #616161,
+    'secondary-text-color': #757575
+);
+
+@function duckplex-color($key: 'primary') {
+    @return map-get($duckplex-colors, $key);
+}
+
+$color-interval: 10% !global;
+
+@function duckplex-color-level($color-name: 'primary', $level: 0) {
+    $color: duckplex-color($color-name);
+    $color-base: if($level < 0, black, white);
+
+    @return mix($color-base, $color, $level * $color-interval);
+}
+
+// Example:
+.panel {
+    background-color: duckplex-color-level('primary', 2);
+}
+
+.navbar {
+    background-color: map-get($duckplex-colors, $key: 'background');
+    color: map-get($duckplex-colors, $key: 'secondary-text-color');
+}
+
+$duckplex-opacity: (
+    'light': 0.8, // opacity used with lighter colors
+    'dark': 0.4 // opacity used with darker colors
+);
+
+@function duckplex-color-alpha($name: 'primary', $opacity: 0)  {
+    $color: duckplex-color($name);
+
+    // Get the named opacity level, if it exists
+    @if map-key-exists($duckplex-opacity, $opacity) {
+        $opacity: map-get($duckplex-opacity, $opacity);
+    }
+
+    // Use rgba() to manipulate the color's alpha level
+    @return rgba($color, $opacity);
+}
+
+// Example usage:
+$button-transparent-color: duckplex-color-alpha('primary', 'light');
+// => rgba(#9E9E9E, 0.8)
+
+$button-color: duckplex-color('primary');
+
+$color-primary: duckplex-color('primary');
+
+$color-primary-tinted: mix(white, $color-primary, 10%);
+$color-primary-shaded: mix(black, $color-primary, 10%);
+
+/*
+$primary-color-dark:   #616161;
+$primary-color:        #9E9E9E;
+$primary-color-light:  #F5F5F5;
+$primary-color-text:   #212121;
+$accent-color:         #FF9800;
+$primary-text-color:   #212121;
+$secondary-text-color: #757575;
+$divider-color:        #BDBDBD;
+*/

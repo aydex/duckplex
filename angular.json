@@ -27,8 +27,14 @@
             ],
             "styles": [
               "src/styles-app-loading.scss",
-              "src/styles.scss"
+              "src/sass/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/sass",
+                "node_modules/bootstrap/scss/"
+              ]
+            },
             "scripts": []
           },
           "configurations": {
